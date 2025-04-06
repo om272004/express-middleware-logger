@@ -13,7 +13,7 @@ app.use((req,res,next) => {
         method : req.method,
         url : req.url
     }
-    fs.appendFile('logs.json', JSON.stringify(logs) + "\n", (err) => {
+    fs.appendFile('logs.json', JSON.stringify(logs) + ",\n", (err) => {
         if(err) return console.error("Error writing logs : ", err);
     })
     next();
