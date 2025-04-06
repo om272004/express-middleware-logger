@@ -18,20 +18,10 @@ app.use((req,res,next) => {
     })
     next();
 })
-
 app.get("/logs",(req,res) => {
     fs.readFile('logs.json', 'utf-8', (err,data) => {
-        if (err) {
-            console.error("Error reading file : ", err);
-            return;
-        }
-        try {
-            const logs = data.trim().split("\n").map(line => JSON.parse(line));
-            console.log("Logs :", logs);
-        } catch (parseError){
-            console.error("Invalid Format : ",parseError.message);
-        }
-        
+        if (err) return res.status(500).send("Error loading file");
+        res.json(data ? JSON.parse("[" + data.slice(0,-2) + "]") : []);
     });
 });
 
